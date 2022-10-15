@@ -7,3 +7,4 @@ this is the change2
 this is the change 3
 >>>>>>> css-assignments
 this is added
+this is another addition
