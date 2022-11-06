@@ -1,10 +1,10 @@
 package com.company;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
+import java.util.stream.Collector;
 import java.util.stream.Collectors;
+
+
 
 class Fruit {
     String name;
@@ -12,7 +12,7 @@ class Fruit {
     int price;
     String color;
 
-    Fruit(String name, int calories, int price, String color) {
+    Fruit(String name, int Calories, int price, String color) {
         this.name = name;
         this.Calories = Calories;
         this.price = price;
@@ -43,7 +43,9 @@ class Fruit {
         this.price = price;
     }
 
-    public String getColor() {
+    public String getColor()
+    {
+        this.color=color;
         return color;
     }
 
@@ -60,28 +62,47 @@ class Fruit {
                 ", color='" + color + '\'' +
                 '}';
     }
-
-   /* class Sortbycalories implements Comparator<Fruit>
-    {
-        public int compare(Fruit i1, Fruit i2)
-        {
-            return .compareTo(str1);
-        }
-    }*/
-
-
 }
-public class FruitAssignment
-{
-    public static void main(String[] args)
+
+
+
+    class SortbyCalories implements Comparator
     {
-        Fruit f=new Fruit("Apple",100,100,"red");
-        Fruit f1=new Fruit("Guava",80,50,"green");
-        Fruit f2=new Fruit("Mongo",200,200,"yellow");
-        Fruit f3=new Fruit("Banana",60,300,"paleYellow");
-        ArrayList<Fruit> l=new ArrayList<>();
+        public int compare(Object i1, Object i2)
         {
-           // List<String> updatelist= l.stream().filter(l.getColor());
+           Integer s1=(Integer)i1;
+           Integer s2=(Integer)i2;
+            return s2.compareTo(s1);
         }
+    }
+
+
+
+public class FruitAssignment {
+    public static void main(String[] args) {
+        Fruit f = new Fruit("Apple", 100, 100, "red");
+        Fruit f4=new Fruit("pomegranate",120,150,"red");
+        Fruit f1 = new Fruit("Guava", 80, 50, "green");
+        Fruit f2 = new Fruit("Mongo", 200, 200, "yellow");
+        Fruit f3 = new Fruit("Banana", 60, 300, "paleYellow");
+        ArrayList<Fruit> l = new ArrayList<>();
+        {
+            l.add(f);
+            l.add(f1);
+            l.add(f2);
+            l.add(f3);
+            l.add(f4);
+
+        }
+       //List<String> sortedlist=  l.stream().filter(s->s.getCalories()>100).sorted((p1,p2)->p1.getCalories().compareTo(p2.getCalories()));
+      //  System.out.println(sortedlist);
+        List<Fruit>  sortedlist=  l.stream().filter(c->c.getCalories()>100).sorted(Comparator.comparingInt(Fruit::getCalories)).collect(Collectors.toList());
+        sortedlist.forEach(System.out::println);
+        List<Fruit>  sortedlist1=  l.stream().sorted(Comparator.comparing(Fruit::getColor)).collect(Collectors.toList());
+        sortedlist1.forEach(System.out::println);
+        List<Fruit>  sortedlist3=  l.stream().filter(p->p.getColor().equals("red")).sorted(Comparator.comparingInt(Fruit::getCalories)).collect(Collectors.toList());
+        sortedlist3.forEach(System.out::println);
+
+
     }
 }
